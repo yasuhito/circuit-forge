@@ -21,10 +21,7 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 requires-python = ">=3.10"
-dependencies = [
-  "numpy",
-  "qiskit",
-]
+dependencies = ["numpy", "qiskit"]
 
 [project.urls]
 repository = "https://github.com/yasuhito/circuit-forge"
@@ -46,6 +43,7 @@ build-backend = "hatchling.build"
 preview = true
 include = ["src/**/*.py", "tests/**/*.py"]
 lint.select = ["ALL"]
+lint.ignore = ["CPY001", "D203", "D213", "COM812"]
 
 [tool.mypy]
 files = ["src", "tests"]

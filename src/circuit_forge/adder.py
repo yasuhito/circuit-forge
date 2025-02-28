@@ -18,10 +18,10 @@ Example:
 """
 
 import sys
-from pathlib import Path
 
 from qiskit import QuantumCircuit
-from qiskit.qasm3 import dumps  # type: ignore[import-untyped]
+
+from circuit_forge.utils import save_qasm_file  # 追加
 
 
 def apply_majority_gate(
@@ -158,11 +158,19 @@ def create_quantum_circuit(qubit_count: int) -> tuple[QuantumCircuit, int]:
     return QuantumCircuit(n_qubits, n_qubits), n_qubits
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """Execute the main adder circuit generation program."""
+    min_args = 2  # Program name + number of bits
+
+    if len(sys.argv) < min_args:
+        sys.stderr.write("Usage: python -m circuit_forge.adder <number_of_bits>\n")
+        sys.exit(1)
+
     qubit_count = int(sys.argv[1])
 
     if not validate_qubit_count(qubit_count):
-        sys.exit(0)
+        sys.stderr.write("Number of bits must be a multiple of 4 and positive.\n")
+        sys.exit(1)
 
     qc, n_qubits = create_quantum_circuit(qubit_count)
 
@@ -192,10 +200,8 @@ if __name__ == "__main__":
 
     qc.measure_all()
 
-    qasm_dir = Path("qasm")
-    if not qasm_dir.is_dir():
-        qasm_dir.mkdir()
+    save_qasm_file(qc, "adder", n_qubits)
 
-    qasm_path = qasm_dir / f"adder_n{n_qubits}.qasm"
-    with qasm_path.open("w") as qasm_file:
-        qasm_file.write(dumps(qc))
+
+if __name__ == "__main__":
+    main()
