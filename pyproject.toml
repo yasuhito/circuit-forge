@@ -1,0 +1,55 @@
+[project]
+name = "circuit-forge"
+version = "0.0.1"
+description = "Circuit Forge: A tool for generating quantum circuits in multiple formats (QASM, Qiskit, Cirq) from a single source, enabling comparative analysis of different transpiler performances"
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "Yasuhito Takamiya", email = "yasuhito@hey.com" }]
+keywords = []
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Scientific/Engineering :: Physics",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+requires-python = ">=3.10"
+dependencies = [
+  "numpy",
+  "qiskit",
+]
+
+[project.urls]
+repository = "https://github.com/yasuhito/circuit-forge"
+
+[tool.uv]
+dev-dependencies = [
+  "mypy>=1.11.2",
+  "pytest-cov>=5.0.0",
+  "pytest>=8.3.4",
+  "ruff>=0.6.8",
+  "uv>=0.4.20",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+preview = true
+include = ["src/**/*.py", "tests/**/*.py"]
+lint.select = ["ALL"]
+
+[tool.mypy]
+files = ["src", "tests"]
+
+[tool.pytest.ini_options]
+addopts = "--cov=src --cov-report=xml"
+pythonpath = ["src"]
