@@ -33,9 +33,10 @@ def cleanup_qasm_files():
 
     yield
 
-    test_files = [f for f in qasm_dir.iterdir() if f.name.startswith("adder_test_")]
+    test_files = [f for f in qasm_dir.iterdir() if f.name.startswith("adder_")]
     for file in test_files:
         file.unlink()
+    qasm_dir.rmdir()
 
 
 def test_validate_qubit_count():
